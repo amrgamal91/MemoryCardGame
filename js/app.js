@@ -4,6 +4,8 @@
 let List_Of_Cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
 let game_started=false;
 let flipped_Cards=[];
+let match_found=0;
+let moves=0;
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -47,6 +49,7 @@ function generateDeck(){
     List_Of_Cards.forEach(createCard);
   }
 }
+
 function playGame(){
   generateDeck();
   let cards=  document.getElementsByClassName('card');
@@ -56,26 +59,83 @@ function playGame(){
 }
 
 function respondToTheClick(evt) {
+    if (flipped_Cards.length === 0){
+      evt.target.classList.add('open');
+      evt.target.classList.add('show');
+      flipped_Cards.push(evt.target);
+      disableClick();
+  }
+  else if (flipped_Cards.length === 1){
+    updateMoves();
     evt.target.classList.add('open');
     evt.target.classList.add('show');
-    console.log('A paragraph was clicked: ' + evt.target.textContent);
-}
-
-function toggleCard(){
-
-  if(game_started==false){
-    game_started=true;
-    //startTimer
+    flipped_Cards.push(evt.target);
+    setTimeout(matchFlippedCards, 1100);
   }
 
-  if (flipped_Cards.length === 0) {
-          $(this).toggleClass("show open").animateCss('flipInY');
-          openCards.push($(this));
-          disableCLick();
-      }
-
 }
 
+function disableClick(evt){
+  flipped_Cards.forEach(function(){
+    removeEventListener('click', respondToTheClick, false)});
+}
+function enableClick(evt){
+  flipped_Cards.forEach(function(){
+    addEventListener('click', respondToTheClick)});
+}
+function matchFlippedCards(){
+  if(flipped_Cards[0].firstChild.className==flipped_Cards[1].firstChild.className){
+    flipped_Cards[0].classList.add("match");
+    flipped_Cards[1].classList.add("match");
+    disableClick();
+    emptyFlippedCards();
+    setTimeout(checkWinning, 1000);
+  }
+  else {
+    flipped_Cards[0].classList.remove("open");flipped_Cards[0].classList.remove("show");
+    flipped_Cards[1].classList.remove("open");flipped_Cards[1].classList.remove("show");
+    enableClick();
+    emptyFlippedCards();
+
+  }
+}
+
+// function to remove openCards
+function emptyFlippedCards() {
+    flipped_Cards = [];
+}
+
+// check whether the game is finished or not
+function checkWinning() {
+    match_found += 1;
+    if (match_found == 8) {
+        alert("You won the game");  //add show result method
+
+    }
+}
+
+function updateMoves(){
+  moves+=1;
+  document.getElementsByClassName('moves')[0].innerText=moves;;
+  // movdiv[0].innerText=moves;
+  if(moves == 16 || moves == 24)
+    addEmptyStar();
+}
+
+function addEmptyStar(){
+  let stars=document.getElementsByClassName('stars');
+  let childcounts=stars[0].childElementCount;
+  for (var i = 0; i < childcounts; i++) {
+    if(stars[0].children[i].children[0].classList.contains('fa-star-o'))
+      continue;
+      else {
+        stars[0].children[i].children[0].classList.remove('fa-star');
+        stars[0].children[i].children[0].classList.add('fa-star-o');
+        break;
+      }
+  }
+
+}
 //start the game
 playGame();
 
