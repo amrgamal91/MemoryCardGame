@@ -1,8 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
-
-
+let List_Of_Cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
+let game_started=false;
+let flipped_Cards=[];
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -24,6 +25,59 @@ function shuffle(array) {
 
     return array;
 }
+/* 1- create html card
+   2- append card to deck
+  */
+function createCard(cardName){
+  let ul=document.getElementById('gameDeck');
+  let li=document.createElement("li");
+  li.className="card";
+  li.insertAdjacentHTML('afterbegin', `<i class="fa ${cardName}"></i>`);
+  // li.innerHtml=`<i class="fa ${cardName}"></i>`;
+  document.getElementById('gameDeck').appendChild(li);
+}
+
+/*    generate deck cards
+there are 16 cards so will loop twice as we have 8 types of cards
+to make it harder -- can make it triple matching so will loop 3 times (24 cards)..later
+*/
+function generateDeck(){
+  for (var i = 0; i < 2; i++) {
+    List_Of_Cards=shuffle(List_Of_Cards);
+    List_Of_Cards.forEach(createCard);
+  }
+}
+function playGame(){
+  generateDeck();
+  let cards=  document.getElementsByClassName('card');
+  for (var i = 0; i < cards.length; i++) {
+    cards[i].addEventListener('click', respondToTheClick);
+  }
+}
+
+function respondToTheClick(evt) {
+    evt.target.classList.add('open');
+    evt.target.classList.add('show');
+    console.log('A paragraph was clicked: ' + evt.target.textContent);
+}
+
+function toggleCard(){
+
+  if(game_started==false){
+    game_started=true;
+    //startTimer
+  }
+
+  if (flipped_Cards.length === 0) {
+          $(this).toggleClass("show open").animateCss('flipInY');
+          openCards.push($(this));
+          disableCLick();
+      }
+
+}
+
+//start the game
+playGame();
 
 
 /*
