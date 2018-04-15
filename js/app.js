@@ -124,8 +124,8 @@ function emptyFlippedCards() {
 function checkWinning() {
 	match_found += 1;
 	if (match_found == 8) {
-    showResult();
-		 resetGame();
+		showResult();
+		resetGame();
 		// alert("You won the game,game duration = " + gameDuration); //add show result method
 	}
 }
@@ -142,25 +142,26 @@ function addEmptyStar() {
 	let stars = document.getElementsByClassName('stars');
 	let childcounts = stars[0].childElementCount;
 	for (var i = 0; i < childcounts; i++) {
-		if (stars[0].children[childcounts-1-i].children[0].classList.contains('fa-star-o'))
+		if (stars[0].children[childcounts - 1 - i].children[0].classList.contains('fa-star-o'))
 			continue;
 		else {
-			stars[0].children[childcounts-1-i].children[0].classList.remove('fa-star');
-			stars[0].children[childcounts-1-i].children[0].classList.add('fa-star-o');
+			stars[0].children[childcounts - 1 - i].children[0].classList.remove('fa-star');
+			stars[0].children[childcounts - 1 - i].children[0].classList.add('fa-star-o');
 			break;
 		}
 	}
 
 }
-function resetStarRating(){
-  let stars = document.getElementsByClassName('stars');
+
+function resetStarRating() {
+	let stars = document.getElementsByClassName('stars');
 	let childcounts = stars[0].childElementCount;
 	for (var i = 0; i < childcounts; i++) {
-		if (stars[0].children[i].children[0].classList.contains('fa-star-o')){
-      stars[0].children[i].children[0].classList.remove('fa-star-o');
+		if (stars[0].children[i].children[0].classList.contains('fa-star-o')) {
+			stars[0].children[i].children[0].classList.remove('fa-star-o');
 			stars[0].children[i].children[0].classList.add('fa-star');
-    }
-  }
+		}
+	}
 }
 
 function resetGame() {
@@ -173,7 +174,7 @@ function resetGame() {
 		removeChild(document.getElementById('gameDeck').lastChild);
 	}
 	document.getElementsByClassName('moves')[0].innerText = 0;
-  resetStarRating();
+	resetStarRating();
 	gameDuration = document.getElementsByClassName('timer')[0].innerText;
 	document.getElementsByClassName('timer')[0].innerText = "00:00:00";
 	stopTimer();
@@ -208,33 +209,33 @@ function stopTimer() {
 	clearInterval(gameTimer);
 }
 
-function showResult(){
-  // Get the modal
-  var modal = document.getElementById('myModal');
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
-  modal.style.display = "block";
-  var movesSpan=document.getElementById('Modal_moves');
-  movesSpan.innerText=moves;
-  var durationSpan=document.getElementById('Modal_time');
-  durationSpan.innerText=document.getElementsByClassName('timer')[0].innerText;
+function showResult() {
+	// Get the modal
+	var modal = document.getElementById('myModal');
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+	modal.style.display = "block";
+	var movesSpan = document.getElementById('Modal_moves');
+	movesSpan.innerText = moves;
+	var durationSpan = document.getElementById('Modal_time');
+	durationSpan.innerText = document.getElementsByClassName('timer')[0].innerText;
 
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function () {
+		modal.style.display = "none";
+	}
 
-  let stars = document.getElementsByClassName('stars');
-  let star_modal=document.getElementById('stars-modal');
+	let stars = document.getElementsByClassName('stars');
+	let star_modal = document.getElementById('stars-modal');
 	let childcounts = stars[0].childElementCount;
 	for (var i = 0; i < childcounts; i++) {
-		if (stars[0].children[i].children[0].classList.contains('fa-star')){
-      let li = document.createElement("li");
-    	li.insertAdjacentHTML('afterbegin', `<i class="fa fa-star"></i>`);
-    	// li.innerHtml=`<i class="fa ${cardName}"></i>`;
-    	document.getElementById('stars-modal').appendChild(li);
-    }
-}
+		if (stars[0].children[i].children[0].classList.contains('fa-star')) {
+			let li = document.createElement("li");
+			li.insertAdjacentHTML('afterbegin', `<i class="fa fa-star"></i>`);
+			// li.innerHtml=`<i class="fa ${cardName}"></i>`;
+			document.getElementById('stars-modal').appendChild(li);
+		}
+	}
 }
 
 //start the game
