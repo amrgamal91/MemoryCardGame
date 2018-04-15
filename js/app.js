@@ -85,15 +85,15 @@ function respondToTheClick(evt) {
 
 }
 
-function disableClick(evt) {
-	flipped_Cards.forEach(function () {
-		removeEventListener('click', respondToTheClick, false)
+function disableClick() {
+	flipped_Cards.forEach(function (element) {
+		element.removeEventListener("click", respondToTheClick)
 	});
 }
 
-function enableClick(evt) {
-	flipped_Cards.forEach(function () {
-		addEventListener('click', respondToTheClick)
+function enableClick() {
+	flipped_Cards.forEach(function (element) {
+		element.addEventListener("click", respondToTheClick)
 	});
 }
 
@@ -123,9 +123,9 @@ function emptyFlippedCards() {
 // check whether the game is finished or not
 function checkWinning() {
 	match_found += 1;
-	if (match_found == 1) {
+	if (match_found == 8) {
     showResult();
-		// resetGame();
+		 resetGame();
 		// alert("You won the game,game duration = " + gameDuration); //add show result method
 	}
 }
@@ -134,7 +134,7 @@ function updateMoves() {
 	moves += 1;
 	document.getElementsByClassName('moves')[0].innerText = moves;
 	// movdiv[0].innerText=moves;
-	if (moves == 2 || moves == 24)
+	if (moves == 18 || moves == 24)
 		addEmptyStar();
 }
 

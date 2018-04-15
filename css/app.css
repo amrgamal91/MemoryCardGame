@@ -101,6 +101,7 @@ h1 {
 .score-panel .stars li {
     list-style: none;
     display: inline-block;
+    color:#FFD700;
 }
 .stars-modal li{
     list-style: none;

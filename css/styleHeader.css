@@ -1,0 +1,27 @@
+@import "compass/css3";
+
+@import "compass/css3/transform";
+@import url(https://fonts.googleapis.com/css?family=Bangers);
+
+
+h1 {
+  text-align: center;
+  font-weight: normal;
+  color: #02ccba;
+  text-transform: uppercase;
+  font-size: 4em;
+  white-space: nowrap;
+  z-index: 1000;
+  font-family: 'Bangers', cursive;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.7);
+  @include skew(0, -6.7deg, false);
+  @include transition-property(font-size);
+  @include transition-duration(0.5s);
+
+}
+
+@media screen and (max-width: 50em) {
+  h1 {
+    font-size: 12vw;
+   }
+}
