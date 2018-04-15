@@ -6,6 +6,11 @@ let game_started=false;
 let flipped_Cards=[];
 let match_found=0;
 let moves=0;
+var hours = 0;
+var minutes = 0;
+var seconds = 0;
+let gameDuration=0;
+var gameTimer="";
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -59,6 +64,10 @@ function playGame(){
 }
 
 function respondToTheClick(evt) {
+  if(game_started==false){
+    game_started=true;
+    startTimer();
+  }
     if (flipped_Cards.length === 0){
       evt.target.classList.add('open');
       evt.target.classList.add('show');
@@ -109,14 +118,14 @@ function emptyFlippedCards() {
 function checkWinning() {
     match_found += 1;
     if (match_found == 8) {
-        alert("You won the game");  //add show result method
-
+      resetGame();
+      alert("You won the game,game duration = "+gameDuration);  //add show result method
     }
 }
 
 function updateMoves(){
   moves+=1;
-  document.getElementsByClassName('moves')[0].innerText=moves;;
+  document.getElementsByClassName('moves')[0].innerText=moves;
   // movdiv[0].innerText=moves;
   if(moves == 16 || moves == 24)
     addEmptyStar();
@@ -136,9 +145,48 @@ function addEmptyStar(){
   }
 
 }
+function resetGame(){
+   game_started=false;
+   match_found=0;
+   moves=0;
+   emptyFlippedCards();
+   while (document.getElementById('gameDeck').hasChildNodes()) {
+     document.getElementById('gameDeck').
+     removeChild(document.getElementById('gameDeck').lastChild);
+    }
+    document.getElementsByClassName('moves')[0].innerText=0;
+    gameDuration=document.getElementsByClassName('timer')[0].innerText;
+    document.getElementsByClassName('timer')[0].innerText="00:00:00";
+    stopTimer();
+    playGame();
+}
+function startTimer(){
+  hours=0;minutes=0;seconds=0;
+   gameTimer=  setInterval(function(){
+          seconds++;
+
+          if(seconds==60){
+            seconds=0;
+            minutes++;
+          }
+
+          if(minutes==60){
+            minutes=0;
+            hours++;
+          }
+          // Compose the string for display
+          var currentTimeString = (hours < 10 ? "0" : "") + hours + ":"
+                                + (minutes < 10 ? "0" : "") + minutes + ":" +
+                                  (seconds < 10 ? "0" : "") + seconds;
+          document.getElementsByClassName('timer')[0].innerText=currentTimeString;
+      },1000);
+}
+function stopTimer(){
+  clearInterval(gameTimer);
+}
 //start the game
 playGame();
-
+document.getElementById("restart").addEventListener("click", resetGame);
 
 /*
  * set up the event listener for a card. If a card is clicked:
