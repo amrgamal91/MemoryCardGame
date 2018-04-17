@@ -1,24 +1,20 @@
-/*
- * Create a list that holds all of your cards
- */
-let List_Of_Cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
-let game_started = false;
-let flipped_Cards = [];
-let match_found = 0;
-let moves = 0;
-var hours = 0;
-var minutes = 0;
-var seconds = 0;
-let gameDuration = 0;
-var gameTimer = "";
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+/****************************************************************************
+ * list of variables
+ ***************************************************************************/
+let listOfCards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
+let gameStarted = false;  /* start game flag used to switch timer on/off */
+let flippedCards = [];		/* list of flipped cards to compare each pair */
+let matchFound = 0;				/* number of matches if 8 then gamed ends (if total cards=16) */
+let moves = 0;						/* total number of moves */
+var hours = minutes = seconds = 0;   /* stop watch timer: hrs:mins:secs */
+let gameDuration = 0;		 /* total duration of the game */
+var gameTimer = "";			/* timer method */
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+/* ======================================================================
+ *  shuffle cards in the array so that order will be changed each game
+ *  Shuffle function from http://stackoverflow.com/a/2450976
+ *=======================================================================
+ */
 function shuffle(array) {
 	var currentIndex = array.length,
 		temporaryValue, randomIndex;
@@ -33,112 +29,159 @@ function shuffle(array) {
 
 	return array;
 }
-/* 1- create html card
-   2- append card to deck
-  */
-function createCard(cardName) {
+
+/* ===================================
+ *  create html card (li element)
+ *  append card to deck
+ * ===================================
+ */
+const createCard = function(cardName) {
 	let ul = document.getElementById('gameDeck');
 	let li = document.createElement("li");
 	li.className = "card";
 	li.insertAdjacentHTML('afterbegin', `<i class="fa ${cardName}"></i>`);
-	// li.innerHtml=`<i class="fa ${cardName}"></i>`;
 	document.getElementById('gameDeck').appendChild(li);
 }
 
-/*    generate deck cards
-there are 16 cards so will loop twice as we have 8 types of cards
-to make it harder -- can make it triple matching so will loop 3 times (24 cards)..later
-*/
-function generateDeck() {
+/* ======================================================================
+ * generate deck cards
+ * there are 16 cards so will loop twice as we have 8 types of cards
+ * to make it harder -- can make it triple matching so will loop 3 times (24 cards)..later
+ *======================================================================
+ */
+const generateDeck = function () {
 	for (var i = 0; i < 2; i++) {
-		List_Of_Cards = shuffle(List_Of_Cards);
-		List_Of_Cards.forEach(createCard);
+		listOfCards = shuffle(listOfCards);
+		listOfCards.forEach(createCard);
 	}
 }
 
-function playGame() {
+/*======================================================================
+ * generate the game deck first
+ *loop on cards and add click listener for each card
+ *======================================================================
+ */
+const playGame = function () {
 	generateDeck();
 	let cards = document.getElementsByClassName('card');
 	for (var i = 0; i < cards.length; i++) {
 		cards[i].addEventListener('click', respondToTheClick);
 	}
-}
+};
 
-function respondToTheClick(evt) {
-
-	if (game_started == false) {
-		game_started = true;
+/*============================================================================
+ * if the game started then start the timer (stop watch)
+ * add the clicked card to flipped cards and show it then disable click on it
+ *=============================================================================
+ */
+const respondToTheClick = function (evt) {
+	if (gameStarted == false) {
+		gameStarted = true;
 		startTimer();
 	}
-	if (flipped_Cards.length === 0) {
+	if (flippedCards.length === 0) {
 		evt.target.classList.add('open');
 		evt.target.classList.add('show');
-		flipped_Cards.push(evt.target);
+		flippedCards.push(evt.target);
 		disableClick();
-	} else if (flipped_Cards.length === 1) {
+	} else if (flippedCards.length === 1) {
 		updateMoves();
 		evt.target.classList.add('open');
 		evt.target.classList.add('show');
-		flipped_Cards.push(evt.target);
+		flippedCards.push(evt.target);
 		setTimeout(matchFlippedCards, 1100);
 	}
 
 }
 
-function disableClick() {
-	flipped_Cards.forEach(function (element) {
+/*=============================================================================================
+ * disable click on card , after click on card (flipped),
+ * not to match with it self if clicked twice
+ *=============================================================================================
+ */
+const disableClick = function () {
+	flippedCards.forEach(function (element) {
 		element.removeEventListener("click", respondToTheClick)
 	});
 }
 
-function enableClick() {
-	flipped_Cards.forEach(function (element) {
+/*=============================================================================================
+ * enable click again if the card does not match
+ *=============================================================================================
+ */
+const enableClick = function () {
+	flippedCards.forEach(function (element) {
 		element.addEventListener("click", respondToTheClick)
 	});
 }
 
-function matchFlippedCards() {
-	if (flipped_Cards[0].firstChild.className == flipped_Cards[1].firstChild.className) {
-		flipped_Cards[0].classList.add("match");
-		flipped_Cards[1].classList.add("match");
+/*================================================================================
+ * --> if pair of cards matched , then add class match for each
+ * disable click on each    , remove them from flipped (opened cards)
+ * check if the game ends
+ * --> else then hide cards , enable click on them
+ * remove them from flipped cards
+ *=================================================================================
+ */
+const matchFlippedCards = function () {
+	if (flippedCards[0].firstChild.className == flippedCards[1].firstChild.className) {
+		flippedCards[0].classList.add("match");
+		flippedCards[1].classList.add("match");
 		disableClick();
 		emptyFlippedCards();
 		setTimeout(checkWinning, 1000);
 	} else {
-		flipped_Cards[0].classList.remove("open");
-		flipped_Cards[0].classList.remove("show");
-		flipped_Cards[1].classList.remove("open");
-		flipped_Cards[1].classList.remove("show");
+		flippedCards[0].classList.remove("open");
+		flippedCards[0].classList.remove("show");
+		flippedCards[1].classList.remove("open");
+		flippedCards[1].classList.remove("show");
 		enableClick();
 		emptyFlippedCards();
 
 	}
 }
 
-// function to remove openCards
-function emptyFlippedCards() {
-	flipped_Cards = [];
+/*=====================================
+ * remove openCards
+ *=====================================
+ */
+const emptyFlippedCards = function () {
+	flippedCards = [];
 }
 
-// check whether the game is finished or not
-function checkWinning() {
-	match_found += 1;
-	if (match_found == 8) {
+/*================================================================================
+ * check whether the game is finished or not
+ * the game considered finished if matched pairs = 8 (if all cards = 16)
+ * --> if not finished then increment total number of moves
+ * --> else then show result in modal (show stars rate , duration )
+ *=================================================================================
+ */
+const checkWinning = function () {
+	matchFound += 1;
+	if (matchFound == 8) {
 		showResult();
 		resetGame();
-		// alert("You won the game,game duration = " + gameDuration); //add show result method
 	}
 }
 
-function updateMoves() {
+/*============================================================
+ * update total number of moves
+ * stars rating depend on total number of moves
+ *============================================================
+ */
+const updateMoves = function () {
 	moves += 1;
 	document.getElementsByClassName('moves')[0].innerText = moves;
-	// movdiv[0].innerText=moves;
 	if (moves == 18 || moves == 24)
 		addEmptyStar();
 }
 
-function addEmptyStar() {
+/*============================================================
+ * the game starts with rating = 3 stars if moves exceeds the limit
+ * then remove one star and so on .
+ *============================================================
+ */
+const addEmptyStar = function () {
 	let stars = document.getElementsByClassName('stars');
 	let childcounts = stars[0].childElementCount;
 	for (var i = 0; i < childcounts; i++) {
@@ -153,7 +196,12 @@ function addEmptyStar() {
 
 }
 
-function resetStarRating() {
+/*============================================================
+ * when restarting the game , star rating need to be reseted
+ * the game starts with 3 stars rating
+ *============================================================
+ */
+const resetStarRating = function () {
 	let stars = document.getElementsByClassName('stars');
 	let childcounts = stars[0].childElementCount;
 	for (var i = 0; i < childcounts; i++) {
@@ -163,10 +211,13 @@ function resetStarRating() {
 		}
 	}
 }
-
-function resetGame() {
-	game_started = false;
-	match_found = 0;
+/*============================================================
+ * reset the game (reset everything in the game )
+ *============================================================
+ */
+const resetGame = function () {
+	gameStarted = false;
+	matchFound = 0;
 	moves = 0;
 	emptyFlippedCards();
 	while (document.getElementById('gameDeck').hasChildNodes()) {
@@ -181,7 +232,11 @@ function resetGame() {
 	playGame();
 }
 
-function startTimer() {
+/*============================================================
+ * start the timer (stop watch) on the game start on first click
+ *============================================================
+ */
+const startTimer = function () {
 	hours = 0;
 	minutes = 0;
 	seconds = 0;
@@ -204,12 +259,20 @@ function startTimer() {
 		document.getElementsByClassName('timer')[0].innerText = currentTimeString;
 	}, 1000);
 }
-
-function stopTimer() {
+/*============================================================
+ * stop the stop watch
+ *============================================================
+ */
+const stopTimer = function () {
 	clearInterval(gameTimer);
 }
 
-function showResult() {
+/*============================================================
+ * show the modal that contain the summary of the game
+ * //...
+ *============================================================
+ */
+const showResult = function () {
 	// Get the modal
 	var modal = document.getElementById('myModal');
 	// Get the <span> element that closes the modal
@@ -241,14 +304,3 @@ function showResult() {
 //start the game
 playGame();
 document.getElementById("restart").addEventListener("click", resetGame);
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
