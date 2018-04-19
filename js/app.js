@@ -274,7 +274,7 @@ const stopTimer = function () {
  */
 const showResult = function () {
 	// Get the modal
-	var modal = document.getElementById('myModal');
+	var modal = document.getElementById('resultModal');
 	// Get the <span> element that closes the modal
 	var span = document.getElementsByClassName("close")[0];
 	modal.style.display = "block";

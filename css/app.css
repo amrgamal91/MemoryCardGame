@@ -37,7 +37,7 @@ html {
      flex-wrap: wrap;
      justify-content: space-between;
      align-items: center;
-     margin: 0 0 3em;
+     margin: 0 0 3vw;
 }
  .deck .card {
      height: 125px;
@@ -75,7 +75,7 @@ html {
      margin: 0;
      padding: 0;
      display: inline-block;
-     margin: 0 2em 0 0;
+     margin: 0 2vw 0 0;
 }
  .score-panel .stars li {
      list-style: none;
@@ -84,16 +84,18 @@ html {
 }
  .stars-modal li {
      list-style: none;
-     display: inline-block;
+     display: inline;
+     color: #FFD700;
+     font-size: 3vw;
 }
  .score-panel .restart {
      float: right;
      cursor: pointer;
 }
-/*--------------- added*/
+/*--------------- added */
  .timer {
      float: right;
-     margin-right: 2em;
+     margin-right: 2vw;
 }
 /* The Modal (background) */
  .modal {
@@ -123,13 +125,14 @@ html {
  .modal-content {
     /*position: relative;
      */
-     float: center;
      background-color: #fefefe;
      margin: auto;
      padding: 0;
      border: 1px solid #888;
-     width: 50%;
-     align: center;
+     border-radius: 15px;
+     width: 38%;
+     height: 55%;
+     overflow: hidden;
      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
      -webkit-animation-name: animatetop;
      -webkit-animation-duration: 0.4s;
@@ -171,17 +174,42 @@ html {
      text-decoration: none;
      cursor: pointer;
 }
+.modal-body{
+  display: block;
+  width: inherit;
+  margin: auto;
+  font-size: 2vw;
+}
  .modal-header {
-     padding: 2px 2px;
-     background-color: #5cb85c;
-     color: white;
+   display: flex;
+   flex-direction: row-reverse;
+   align-items:center;
+   background-color: #02ccba;
+   width: 100%;
+   margin: auto;
+   height: 20%;
+   color: white;
+   border-radius: 5px;
+   padding-left: 1vw;
+   padding-right: 1vw;
+}
+.resultTitle{
+  width: 100%;
+  margin: auto;
+  align:center;
+}
+#result{
+  width: 100%;
+  margin: auto;
 }
  #successIcon {
-     margin: auto;
-     color: #5cb85c;
-     text-shadow: 1px 1px 1px #ccc;
-     font-size: 7.5em;
+    margin-left:20%;
+    color: #02ccba;
+    text-shadow: 1px 1px 1px #ccc;
+    font-size: 5vw;
+    align-content: center;
 }
+
  @media screen and (max-width: 660px) {
      .deck{
          width:580px;
@@ -211,4 +239,3 @@ html {
          height: 100px;
     }
 }
- 
