@@ -56,6 +56,8 @@ html {
      transform: rotateY(0);
      background: #02b3e4;
      cursor: default;
+     -webkit-animation: flipInY .75s;
+     animation: flipInY .75s;
 }
  .deck .card.show {
      font-size: 33px;
@@ -64,6 +66,10 @@ html {
      cursor: default;
      background: #02ccba;
      font-size: 33px;
+     animation: pulse .75s;
+}
+.win{
+   animation: rubberBand .75s;
 }
 /* * Styles for the Score Panel */
  .score-panel {
@@ -130,8 +136,8 @@ html {
      padding: 0;
      border: 1px solid #888;
      border-radius: 15px;
-     width: 38%;
-     height: 55%;
+     width: 25%;
+     height: 40%;
      overflow: hidden;
      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
      -webkit-animation-name: animatetop;
@@ -139,29 +145,7 @@ html {
      animation-name: animatetop;
      animation-duration: 0.4s;
 }
-/* Add Animation */
- @-webkit-keyframes animatetop {
-     from {
-         top: -300px;
-         opacity: 0;
-    }
-     to {
-         top: 0;
-         opacity: 1;
-    }
-     ;
-}
- @keyframes animatetop {
-     from {
-         top: -300px;
-         opacity: 0;
-    }
-     to {
-         top: 0;
-         opacity: 1;
-    }
-     ;
-}
+
 /* The Close Button */
  .close {
      color: white;
@@ -176,9 +160,9 @@ html {
 }
 .modal-body{
   display: block;
-  width: inherit;
+  width: 60%;
   margin: auto;
-  font-size: 2vw;
+  font-size: 1.1vw;
 }
  .modal-header {
    display: flex;
@@ -197,17 +181,19 @@ html {
   width: 100%;
   margin: auto;
   align:center;
+  font-size: 1.5vw;
 }
 #result{
   width: 100%;
   margin: auto;
 }
  #successIcon {
-    margin-left:20%;
+
+    margin-left: 35%;
     color: #02ccba;
     text-shadow: 1px 1px 1px #ccc;
-    font-size: 5vw;
-    align-content: center;
+    font-size: 3.5vw;
+    align-items: center;
 }
 
  @media screen and (max-width: 660px) {

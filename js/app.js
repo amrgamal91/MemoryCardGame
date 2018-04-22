@@ -89,7 +89,7 @@ const respondToTheClick = function (evt) {
 		evt.target.classList.add('open');
 		evt.target.classList.add('show');
 		flippedCards.push(evt.target);
-		setTimeout(matchFlippedCards, 1100);
+		setTimeout(matchFlippedCards, 900);
 	}
 
 }
@@ -129,7 +129,7 @@ const matchFlippedCards = function () {
 		flippedCards[1].classList.add("match");
 		disableClick();
 		emptyFlippedCards();
-		setTimeout(checkWinning, 1000);
+		setTimeout(checkWinning, 900);
 	} else {
 		flippedCards[0].classList.remove("open");
 		flippedCards[0].classList.remove("show");
@@ -159,11 +159,12 @@ const emptyFlippedCards = function () {
 const checkWinning = function () {
 	matchFound += 1;
 	if (matchFound == 8) {
+ 		document.getElementById('gameDeck').classList.add("win");
+		//setTimeout(showResult(),12000);
 		showResult();
 		resetGame();
 	}
 }
-
 /*============================================================
  * update total number of moves
  * stars rating depend on total number of moves
@@ -290,6 +291,12 @@ const showResult = function () {
 
 	let stars = document.getElementsByClassName('stars');
 	let star_modal = document.getElementById('stars-modal');
+	let resultStars=star_modal.childElementCount;
+	if(resultStars > 0){
+		for (var i = 0; i < resultStars; i++) {
+			star_modal.removeChild(star_modal.childNodes[0]);
+		}
+	}
 	let childcounts = stars[0].childElementCount;
 	for (var i = 0; i < childcounts; i++) {
 		if (stars[0].children[i].children[0].classList.contains('fa-star')) {
