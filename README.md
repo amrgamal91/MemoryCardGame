@@ -7,12 +7,17 @@
 
 ## Instructions
 
-Click a card to open it, if two opened cards matches, they will keep opening. If two opened cards do not match, they will flip and you need to remember the symbol and explore the matched one.
-
-When all cards matches, you win.
+Below are the game isntructions (how to play):
+1-cards are mixed up and faced down 
+2- turn over any 2 cards 
+    a- if the 2 cards are matched then they will be kept up
+    b-if the 2 cards are not matched then it will be turned back over 
+3- try to remember what was on each card and where it was.
+4- the game is over when all cards matched 
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+This repository is a project in udacity Frontend Nanodegree.
+I most likely accept pull requests if it suitable for me to be added to the code
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+

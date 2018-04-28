@@ -27,10 +27,10 @@ html {
 }
 /* * Styles for the deck of cards */
  .deck {
-     width: 660px;
-     min-height: 680px;
+     width: 560px;
+     min-height: 580px;
      background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-     padding: 32px;
+     padding: 20px;
      border-radius: 10px;
      box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
      display: flex;
@@ -40,8 +40,8 @@ html {
      margin: 0 0 3vw;
 }
  .deck .card {
-     height: 125px;
-     width: 125px;
+     height: 110px;
+     width: 110px;
      background: #2e3d49;
      font-size: 0;
      color: #ffffff;
@@ -75,7 +75,7 @@ html {
  .score-panel {
      text-align: left;
      width: 345px;
-     margin-bottom: 10px;
+     margin-bottom: 5px;
 }
  .score-panel .stars {
      margin: 0;
