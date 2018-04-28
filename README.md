@@ -15,6 +15,11 @@ Below are the game isntructions (how to play):
 3- try to remember what was on each card and where it was.
 4- the game is over when all cards matched 
 
+the game starts with stars rating = 3 stars , if i you exceed 18 moves then a star removed 
+if you exceed 24 moves then another one removed 
+
+a timer displayed to measure the game time ,it will be better if you finishes the game in the shortest time :) 
+
 ## Contributing
 
 This repository is a project in udacity Frontend Nanodegree.
