@@ -160,11 +160,23 @@ const checkWinning = function () {
 	matchFound += 1;
 	if (matchFound == 8) {
  		document.getElementById('gameDeck').classList.add("win");
-		//setTimeout(showResult(),12000);
-		showResult();
+		waitAndShowResult();
 		resetGame();
 	}
 }
+/*============================================================
+ * delay the execution of showResult for 1 second to display
+ * the winning animation on the game board
+ *============================================================
+ */
+function waitAndShowResult() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      showResult();
+    }, 900);
+  });
+}
+
 /*============================================================
  * update total number of moves
  * stars rating depend on total number of moves
