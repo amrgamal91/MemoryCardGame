@@ -3,6 +3,7 @@
 @import "compass/css3/transform";
 @import url(https://fonts.googleapis.com/css?family=Bangers);
 
+
 h1 {
   text-align: center;
   font-weight: normal;
@@ -11,25 +12,14 @@ h1 {
   font-size: 3.5em;
   white-space: nowrap;
   z-index: 1000;
-  font-family: "Bangers", cursive;
+  font-family: 'Bangers', cursive;
   text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.7);
   @include skew(0, -6.7deg, false);
   @include transition-property(font-size);
   @include transition-duration(0.5s);
-}
 
-h3 {
-  text-align: center;
-  font-weight: normal;
-  color: #418855;
-  text-transform: uppercase;
-  font-size: 2.5em;
-  white-space: nowrap;
-  z-index: 1000;
-  font-family: "Bangers", cursive;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7);
 }
-footer {
+footer{
   text-align: center;
   font-weight: normal;
   color: #02ccba;
@@ -37,7 +27,7 @@ footer {
   font-size: 1.5em;
   white-space: nowrap;
   z-index: 1000;
-  font-family: "Bangers", cursive;
+  font-family: 'Bangers', cursive;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7);
   @include skew(0, -6.7deg, false);
   @include transition-property(font-size);
@@ -46,8 +36,8 @@ footer {
 @media screen and (max-width: 50em) {
   h1 {
     font-size: 12vw;
-  }
-  footer {
-    font-size: 9vw;
-  }
+   }
+   footer{
+     font-size: 9vw;
+   }
 }
